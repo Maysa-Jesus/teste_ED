@@ -56,10 +56,22 @@ body {
 }
 
 /* Mensagem de erro */
-#mensagemErro{
+#mensagemFormulario{
     margin-top: 10px;
-    color: darkred;
     font-weight: bold;
+}
+
+/* Foco normal */
+input:focus {
+    outline: none;
+    border: 2px solid black;
+}
+
+/* Foco com erro (aplicado com JavaScript) */
+input.erro:focus {
+    outline: none;
+    border: 2px solid darkred;
+    background-color: #fdd;
 }
 
 /* Campos de entrada */

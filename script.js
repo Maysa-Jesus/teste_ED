@@ -34,32 +34,32 @@ function cadastrar() {
     resultado = inputResultado.value.trim();
 
     // Limpa mensagens de erro e a marcação nas bordas
-    mensagemErro.innerHTML = '';
+    mensagemFormulario.innerHTML = '';
     limparBordasErro();
 
     // Valida os dados do formulário
     if (nome === '') {
-        mostrarErro("Preencha o campo do Nome!", inputNome);
+        mostrarMensagemFormulario("Preencha o campo do Nome!", inputNome, 'erro');
         return;
     }
     if (isNaN(ra) || ra <= 0 || ra.toString().length < 5) {
-        mostrarErro("Preencha o RA corretamente!<br>(maior que 0 e com no mínimo 5 dígitos)", inputRA);
+        mostrarMensagemFormulario("Preencha o RA corretamente!<br>(maior que 0 e com no mínimo 5 dígitos)", inputRA, 'erro');
         return;
     }
     if (isNaN(idade) || idade <= 0) {
-        mostrarErro("Preencha a Idade corretamente! (maior que 0)", inputIdade);
+        mostrarMensagemFormulario("Preencha a Idade corretamente! (maior que 0)", inputIdade, 'erro');
         return;
     }
     if (sexo === '') {
-        mostrarErro("Selecione o Sexo!", inputSexo);
+        mostrarMensagemFormulario("Selecione o Sexo!", inputSexo, 'erro');
         return;
     }
     if (media === '' || Number(media) < 0 || Number(media) > 10) {
-        mostrarErro("Preencha a Média corretamente! (entre 0 e 10)", inputMedia);
+        mostrarMensagemFormulario("Preencha a Média corretamente! (entre 0 e 10)", inputMedia, 'erro');
         return;
     }
     if (resultado === '') {
-        mostrarErro("Selecione o Resultado!", inputResultado);
+        mostrarMensagemFormulario("Selecione o Resultado!", inputResultado, 'erro');
         return;
     }
 
@@ -75,18 +75,13 @@ function cadastrar() {
 
     // Adiciona o novo aluno ao array de objetos
     arrayObj.push(novoObjeto);
-    
+
     // Limpa todos os campos do formulário
     document.querySelectorAll('.input').forEach(input => input.value = '');
 
     // Mensagem de sucesso no cadastro
-    let msg = ""
-    arrayObj.forEach((item, index) => {
-        msg = `<p><strong>Aluno "${nome}" Cadastrado com Sucesso!!</strong></p>`
-    });
-
-    // Mostra a mensagem de sucesso na tela
-    mostrarInfos(msg);
+    let msg = `<p><strong>Aluno "${nome}" Cadastrado com Sucesso!!</strong></p>`
+    mostrarMensagemFormulario(msg, null, 'sucesso');
 }
 
 // -----------------------------------------
@@ -94,12 +89,10 @@ function cadastrar() {
 // -----------------------------------------
 
 // Função de ordenação genérica usando o quickSort)
-function ordenacao(vetor, chave, crescente=true) {
+function ordenacao(vetor, chave, crescente = true) {
     quickSort(vetor, (elem1, elem2) => {
         const valor1 = elem1[chave];
         const valor2 = elem2[chave];
-        console.log('Tipo de valor1:', typeof(valor1)); 
-        console.log('Tipo de valor2:', typeof(valor2));
 
         // Verifica se é comparação de strings
         if (typeof valor1 === 'string' && typeof valor2 === 'string') {
@@ -217,21 +210,78 @@ function mostrarInfos(texto = "Infos:") {
 // Função para fechar a exibição das informações
 function fecharInfos() {
     infos.style.display = 'none';
-    saida.innerText = 'none';
+    saida.innerHTML = '';
     fecharBtn.style.display = 'none';
 }
 
 // Função para exibir mensagens de erro e destacar campos inválidos
-function mostrarErro(mensagem, input) {
-    let mensagemErro = document.getElementById('mensagemErro');
-    mensagemErro.innerHTML = mensagem;
-    input.style.border = '2px solid darkred';
+function mostrarMensagemFormulario(mensagem, input = null, tipo = 'erro') {
+    const mensagemFormulario = document.getElementById('mensagemFormulario');
+    // Definir a cor da mensagem com base no tipo (erro ou sucesso)
+    if (tipo === 'erro') {
+        mensagemFormulario.style.color = 'darkred';
+        if (input !== null) {
+            input.classList.add('erro');
+            input.style.border = '2px solid darkred';
+            input.focus();
+        }
+    } else if (tipo === 'sucesso') {
+        mensagemFormulario.style.color = 'darkgreen';
+        setTimeout(() => {
+            mensagemFormulario.innerHTML = '';
+        }, 3000);
+    }
+
+    // Mostrar a mensagem
+    mensagemFormulario.innerHTML = mensagem;
 }
 
 // Função para limpar bordas dos campos
 function limparBordasErro() {
     let inputs = document.querySelectorAll('.input');
     inputs.forEach(input => {
+        input.classList.remove('erro');
         input.style.border = '';
     });
 }
+
+// Função para configurar o foco nos inputs
+function configurarFoco() {
+    const inputs = document.querySelectorAll('.input');
+    const cadastrarBtn = document.getElementById('cadastrarBtn');
+
+    inputs[0].focus();
+
+    for (let i = 0; i < inputs.length; i++) {
+        inputs[i].addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+
+                if (i < inputs.length - 1) {
+                    inputs[i + 1].focus();
+                } else {
+                    cadastrarBtn.focus();
+                }
+            }
+        });
+    }
+
+    cadastrarBtn.addEventListener('click', () => {
+        let inputsErro = document.querySelectorAll('.input.erro');
+
+        if (inputsErro.length > 0) {
+            inputsErro[0].focus();
+        } else  {
+            inputs[0].focus();
+        }
+    });
+}
+
+// -----------------------------------------
+// INICIALIZAÇÃO
+// -----------------------------------------
+function inicializar() {
+    configurarFoco();
+}
+
+window.onload = inicializar;
