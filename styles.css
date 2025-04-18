@@ -5,7 +5,6 @@ html, body {
 
 body {
     font-family: "Times New Roman";
-    /* background-color: rgb(51, 48, 48); */
     background: linear-gradient(45deg, #000000, #ebebeb);
     margin: 20px;
     background-repeat: no-repeat;
@@ -52,6 +51,12 @@ body {
     margin-bottom: 5px;
 }
 
+#mensagemErro{
+    color: darkred;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
 .input {
     width: 100%;
     padding: 5px;
@@ -83,7 +88,6 @@ body {
 
 .infos {
     display: none;
-    /* margin-top: 30px; */
     background-color: #ddd;
     border: 2px solid rgb(146, 146, 146);
     padding: 20px;

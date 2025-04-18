@@ -6,38 +6,82 @@ const fecharBtn = document.getElementById('fechar-btn');
 
 function cadastrar() {
 
-    nome = document.getElementById("nome").value;
-    ra = Number(document.getElementById("ra").value);
-    idade = Number(document.getElementById("idade").value);
-    sexo = document.getElementById("sexo").value;
-    media = Number(document.getElementById("media").value);
-    resultado = document.getElementById("resultado").value;
+    inputNome = document.getElementById("nome");
+    inputRA = document.getElementById("ra");
+    inputIdade = document.getElementById("idade");
+    inputSexo = document.getElementById("sexo");
+    inputMedia = document.getElementById("media");
+    inputResultado = document.getElementById("resultado");
+
+    nome = inputNome.value.trim();
+    ra = Number(inputRA.value.trim());
+    idade = Number(inputIdade.value.trim());
+    sexo = inputSexo.value.trim();
+    media = inputMedia.value.trim();
+    resultado = inputResultado.value.trim();
+
+    mensagemErro.innerHTML = '';
+    limparBordasErro();
+
+
+    if (nome === '') {
+        mostrarErro("Preencha o campo do Nome!", inputNome);
+        return;
+    }
+    if (isNaN(ra) || ra <= 0) {
+        mostrarErro("Preencha o RA corretamente! (maior que 0)", inputRA);
+        return;
+    }
+    if (isNaN(idade)  || idade <= 0) {
+        mostrarErro("Preencha a Idade corretamente! (maior que 0)", inputIdade);
+        return;
+    }
+    if (sexo === '') {
+        mostrarErro("Selecione o Sexo!", inputSexo);
+        return;
+    }
+    if (media === '' || Number(media) < 0 || Number(media) > 10) {
+        mostrarErro("Preencha a Média corretamente! (entre 0 e 10)", inputMedia);
+        return;
+    }
+    if (resultado === '') {
+        mostrarErro("Selecione o Resultado!", inputResultado);
+        return;
+    }
 
     let novoObjeto = {
         nome: nome,
         ra: ra,
         idade: idade,
         sexo: sexo,
-        media: media,
+        media: Number(media),
         resultado: resultado
     };
 
     arrayObj.push(novoObjeto);
 
-    document.getElementById('nome').value = '';
-    document.getElementById('ra').value = '';
-    document.getElementById('idade').value = '';
-    document.getElementById('sexo').value = '';
-    document.getElementById('media').value = '';
-    document.getElementById('resultado').value = '';
+    document.querySelectorAll('.input').forEach(input => input.value = '');
 
     let msg = ""
     arrayObj.forEach((item, index) => {
-        msg = `<p><strong>Aluno ${index + 1} Cadastrado com Sucesso!!</strong></p>`
+        msg = `<p><strong>Aluno "${nome}" Cadastrado com Sucesso!!</strong></p>`
     });
 
     mostrarInfos(msg);
 
+}
+
+function mostrarErro(mensagem, input) {
+    let mensagemErro = document.getElementById('mensagemErro');
+    mensagemErro.innerHTML = mensagem;
+    input.style.border = '2px solid darkred';
+}
+
+function limparBordasErro() {
+    let inputs = document.querySelectorAll('.input');
+    inputs.forEach(input => {
+        input.style.border = '';
+    });
 }
 
 function quickSort(vetor, fnComp, ini = 0, fim = vetor.length - 1) {
@@ -68,14 +112,14 @@ function quickSort(vetor, fnComp, ini = 0, fim = vetor.length - 1) {
 function ordenacaoNome() {
     quickSort(arrayObj,
         (elem1, elem2) => elem1.nome > elem2.nome)
-    
+
     mostrarArray("Relatório de Alunos em ordem crescente por Nome:", arrayObj)
 }
 
-function ordenacaoRA(){
+function ordenacaoRA() {
     quickSort(arrayObj,
         (elem1, elem2) => elem1.ra < elem2.ra)
-    
+
     mostrarArray("Relatório de Alunos em ordem decrescente por RA:", arrayObj)
 }
 

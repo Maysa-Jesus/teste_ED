@@ -11,7 +11,7 @@
     <h3 id="titulo">Cadastro de Alunos</h3>
 
     <div class="container">
-        <div class="formulario">
+        <div class="formulario" id="formulario">
             <div>
                 <label for="nome"><strong>Informe o nome:</strong></label>
                 <input type="text" class="input" id="nome">
@@ -45,11 +45,12 @@
                     <option value="reprovado">Reprovado</option>
                 </select>
             </div>
+
+            <div id="mensagemErro"></div>
         </div>
 
         <div class="botoes">
             <button onclick="cadastrar()" class="btn">Cadastrar</button>
-            <!-- <button onclick="mostrar()" class="btn">Mostrar</button> -->
             <button onclick="ordenacaoNome()" class="btn">Relatório por Nome</button>
             <button onclick="ordenacaoRA()" class="btn">Relatório por RA</button>
             <button onclick="ordenacaoAprovadosNome()" class="btn">Relatório de Aprovados por Nome</button>
