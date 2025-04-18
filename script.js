@@ -43,7 +43,7 @@ function cadastrar() {
         return;
     }
     if (isNaN(ra) || ra <= 0 || ra.toString().length < 5) {
-        mostrarErro("Preencha o RA corretamente!\n(maior que 0 e com no mínimo 5 dígitos)", inputRA);
+        mostrarErro("Preencha o RA corretamente!<br>(maior que 0 e com no mínimo 5 dígitos)", inputRA);
         return;
     }
     if (isNaN(idade) || idade <= 0) {
