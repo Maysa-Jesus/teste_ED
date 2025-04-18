@@ -33,7 +33,7 @@ function cadastrar() {
 
     let msg = ""
     arrayObj.forEach((item, index) => {
-        msg += `<p><strong>Aluno ${index + 1} Cadastrado com Sucesso!!</strong></p>`
+        msg = `<p><strong>Aluno ${index + 1} Cadastrado com Sucesso!!</strong></p>`
     });
 
     mostrarInfos(msg);
