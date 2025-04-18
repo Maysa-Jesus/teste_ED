@@ -42,8 +42,8 @@ function cadastrar() {
         mostrarErro("Preencha o campo do Nome!", inputNome);
         return;
     }
-    if (isNaN(ra) || ra <= 0) {
-        mostrarErro("Preencha o RA corretamente! (maior que 0)", inputRA);
+    if (isNaN(ra) || ra <= 0 || ra.toString().length < 5) {
+        mostrarErro("Preencha o RA corretamente! (maior que 0 e com no mínimo 5 dígitos)", inputRA);
         return;
     }
     if (isNaN(idade) || idade <= 0) {
