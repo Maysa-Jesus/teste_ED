@@ -8,9 +8,13 @@
     <title>Cadastro de Alunos</title>
 </head>
 <body>
+    <!-- Título principal da página -->
     <h3 id="titulo">Cadastro de Alunos</h3>
 
+    <!-- Container principal que agrupa formulário, botões e informações -->
     <div class="container">
+
+        <!-- Formulário de cadastro de alunos -->
         <div class="formulario" id="formulario">
             <div>
                 <label for="nome"><strong>Informe o nome:</strong></label>
@@ -46,9 +50,11 @@
                 </select>
             </div>
 
+            <!-- Div para mostrar mensagens de erro -->
             <div id="mensagemErro"></div>
         </div>
 
+        <!-- Botões de ação -->
         <div class="botoes">
             <button onclick="cadastrar()" class="btn">Cadastrar</button>
             <button onclick="ordenacaoNome()" class="btn">Relatório por Nome</button>
@@ -57,10 +63,12 @@
             <button onclick="fecharInfos()" class="btn" id="fechar-btn">Fechar Informações</button>
         </div>
 
+        <!-- Área de informações de alunos cadastrados -->
         <div class="infos" id="infos">
             <p id="saidaInfos"><strong>Infos:</strong></p>
         </div>
         
     </div>
+
 </body>
 </html>
